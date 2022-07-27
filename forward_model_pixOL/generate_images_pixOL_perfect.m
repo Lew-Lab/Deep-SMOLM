@@ -17,7 +17,7 @@ clc;
 % give the save address for generated data
 % ********************************
 
-save_folder = '/home/wut/Documents/Deep-SMOLM/data/opt_PSF_data_1000vs2/training_20220526_pixOL_SNR1000_2_gamma_linear_distribution_photon_poisson/'; 
+save_folder = '..\Examples\Example_training_data\'; 
 % ********************************
 image_size = 60;  % the pixel size of the simulation image (feel free to change it)
 upsampling_ratio  = 6;
@@ -37,15 +37,15 @@ h = h./max(max(h));
 
 %% user defined parameters
 
-n_images = 1; % the simulated image numbers (feel free to change it)
+n_images = 100; % the simulated image numbers (feel free to change it); 30K is used for training Deep-SMOLM
 signal= 1000; %(feel free to change it)
 background_avg=2; %(feel free to change it)
-%signal_sigma = 2000;
+
 SM_num_range = 8;
 SM_num_min = 7;
 
 
-for ii = (577:577+32)+32 %each 4 images, and total 2000*4 images
+for ii = 1:n_images %each 4 images, and total 2000*4 images
     ii
 if rem(ii,100)==0
    ii
@@ -75,11 +75,9 @@ n_SMs = floor(rand(1)*SM_num_range+SM_num_min); % number of single molecules
 
 x_SMs = (0.10+0.8*rand(1,n_SMs))*image_size-(image_size)/2; %x location, in unit of pixles
 y_SMs = (0.10+0.8*rand(1,n_SMs))*image_size-(image_size)/2; %y location, in unit of pixles
-temp = (poissrnd(3,1,100000)+normrnd(0,1,1,100000)-0.5)*350; temp(temp<100)=[];  %mean(temp)
-%temp=generateSignal_distribution(); temp(temp<100)=[];
+temp = (poissrnd(3,1,100000)+normrnd(0,1,1,100000)-0.5)*350; temp(temp<100)=[];  %create broad signal distribution with mean of 1000
 
-
-signal_SMs = temp(1:n_SMs);
+signal_SMs = temp(1:n_SMs)*signal/1000;
 x_SMs_phy = x_SMs*pixel_size;
 y_SMs_phy = y_SMs*pixel_size;
 
@@ -102,7 +100,8 @@ I_SMsx = I_SMs(1:image_size,1:image_size,:);
 I_SMsy = I_SMs(1:image_size,image_size+1:image_size*2,:);
 I_SMsy = flip(I_SMsy,2);
 %% generate the basis image
-I = ones(image_size,image_size*2)*background;
+I = ones(image_size,image_size*2)*background;   
+bkg_img = I;
 Ix = I(1:image_size,1:image_size);
 Iy = I(1:image_size,image_size+1:image_size*2);
 % I = imresize(I,size(I)*upsampling_ratio,'nearest');
@@ -171,26 +170,11 @@ I_YZ = I_YZ+temp*muyz(i);
 end
 
 % I_poissx = poissrnd(Ix); % if you need multiple realization for a single ground truth, modify here
-% %imagesc(I_poiss); axis image;
 % I_poissy = poissrnd(Iy);
-% I_poissx_up = imresize(I_poissx,[image_size,image_size]*upsampling_ratio,'box');  
-% I_poissy_up = imresize(I_poissy,[image_size,image_size]*upsampling_ratio,'box'); 
-% Ix_up = imresize(Ix,[image_size,image_size]*upsampling_ratio,'box');  
-% Iy_up = imresize(Iy,[image_size,image_size]*upsampling_ratio,'box'); 
 
-%save ground truth and image
-% image_with_poission(1,:,:) = I_poissx;
-% image_with_poission(2,:,:) = I_poissy;
-% image_with_poission_up(1,:,:) = I_poissx_up;
-% image_with_poission_up(2,:,:) = I_poissy_up;
 image_noiseless(1,:,:) = Ix;
 image_noiseless(2,:,:) = Iy;
-% image_noiseless_up(1,:,:) = Ix_up;
-% image_noiseless_up(2,:,:) = Iy_up;
-% image_GT_up(1,:,:) = I_intensity_up;
-% image_GT_up(2,:,:) = I_theta_up;
-% image_GT_up(3,:,:) = I_phi_up;
-% image_GT_up(4,:,:) = I_gamma_up;
+
 image_GT_up(1,:,:) = I_intensity_gaussian;
 image_GT_up(2,:,:) = I_XX;
 image_GT_up(3,:,:) = I_YY;
@@ -207,11 +191,6 @@ image_GT_up(12,:,:) = I_sXZ;
 image_GT_up(13,:,:) = I_sYZ;
 
 
-% image_GT_up(12,:,:) = I_gamma_heatmap;
-% image_GT_up(13,:,:) = I_sXX_wogamma;
-% image_GT_up(14,:,:) = I_sYY_wogamma;
-% image_GT_up(15,:,:) = I_sZZ_wogamma;
-
 GT_list(1,:)=ones(size(x_phy))*ii;
 GT_list(2,:)=x_phy;
 GT_list(3,:)=y_phy;
@@ -219,20 +198,15 @@ GT_list(4,:)=I_grd;
 GT_list(5,:)=thetaD_grd;
 GT_list(6,:)=phiD_grd;
 GT_list(7,:)=gamma_grd;
-img_bkg = background;
-% image_with_poission_bkgdRmvd = image_with_poission-background;
-% image_with_poission_bkgdRmvd_up = image_with_poission_up-background;
+img_bkg = bkg_img;
 
 
-%save([save_folder,'image_with_poission',num2str(ii),'.mat'],'image_with_poission');
+
+
 save([save_folder,'img_bkg',num2str(ii),'.mat'],'img_bkg');
-%save([save_folder,'image_with_poission_up',num2str(ii),'.mat'],'image_with_poission_up');
-%save([save_folder,'image_with_poission_bkgdRmvd',num2str(ii),'.mat'],'image_with_poission_bkgdRmvd');
-%save([save_folder,'image_with_poission_bkgdRmvd_up',num2str(ii),'.mat'],'image_with_poission_bkgdRmvd_up');
 save([save_folder,'image_GT_up',num2str(ii),'.mat'],'image_GT_up');
 save([save_folder,'GT_list',num2str(ii),'.mat'],'GT_list');
 save([save_folder,'image_noiseless',num2str(ii),'.mat'],'image_noiseless');
-%save([save_folder,'image_noiseless_up',num2str(ii),'.mat'],'image_noiseless_up');
 
 
 
