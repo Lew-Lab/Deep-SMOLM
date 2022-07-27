@@ -10,8 +10,8 @@ Please read the 'readme.docx'
 ## Deep-SMOLM training/estimating
 ```
 Training: Deep_SMOLM_main.py
-Estimating: Deep_SMOLM_est.pu
-Experimental data estimating: Deep_SMOLM_est_experiment
+Estimating: Deep_SMOLM_est.py
+Experimental data estimating: Deep_SMOLM_est_experiment.py
 ```
 
 ## Forward model
