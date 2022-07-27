@@ -1,4 +1,5 @@
 {   
+    "****Description for [name]*******": "name of the current running project; only [name] will be used, [name1] and others are just for record to switch easily",
     "name": "training_perfect_pixOL",
     "name2":"training_with_retrieve_pixOL_com",
     "name3": "MC_simulation",
@@ -10,19 +11,23 @@
     "n_gpu": 1,
     "seed": 666,
 
-    "comet1": {
+    
+    "****Description for [comet]*******": "your account at wwww.comet.ml, a website for in-live plotting the training/testing results",
+    "comet": {
         "api": "HS8aaMUrFL1HqxSzscKX8QGd7",
         "offline": false,
         "savedata": true
     },
 
     
-    "comet": {
+    "comet1": {
         "api": "your API key",
         "offline": false,
         "savedata": false
     },
 
+
+    "****Description for [arch]*******": "choise of the neural network archtechture; Deep-SMOLM use the neural network archtecture built in [model/]",
     "arch": {
         "type": "ConvNet",
         "args": {}

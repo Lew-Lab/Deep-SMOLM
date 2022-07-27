@@ -38,13 +38,13 @@ class MicroscopyDataLoader():
         XY_channel = XY_channel.astype('float32') 
         XY_channel = np.random.poisson(XY_channel)
 
-        if self.background_name=="":
-            bkg_channel=2
-        else:
-            bkg_image = sio.loadmat(self.file_folder+"/"+self.background_name+ID+'.mat') 
-            bkg_channel = np.array(bkg_image[self.background_name]) # 6 480 480 1
-            bkg_channel =bkg_channel.transpose(0,1,2)
-            bkg_channel = bkg_channel.astype('float32') 
+        # if self.background_name=="":
+        #     bkg_channel=2
+        # else:
+        #     bkg_image = sio.loadmat(self.file_folder+"/"+self.background_name+ID+'.mat') 
+        #     bkg_channel = np.array(bkg_image[self.background_name]) # 6 480 480 1
+        #     bkg_channel =bkg_channel.transpose(0,1,2)
+        #     bkg_channel = bkg_channel.astype('float32') 
 
 
         XY_channel = XY_channel

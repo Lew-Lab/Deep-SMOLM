@@ -4,7 +4,6 @@ import torch
 from tqdm import tqdm_notebook as tqdm
 from typing import List
 from torchvision.utils import make_grid
-#from base import BaseTrainer
 from utils import inf_loop
 import matplotlib.pyplot as plt
 import sys
