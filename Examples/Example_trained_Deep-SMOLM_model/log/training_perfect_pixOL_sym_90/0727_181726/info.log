@@ -1,0 +1,5 @@
+2022-07-27 18:18:18,961 - trainer - INFO -     epoch          : 1
+2022-07-27 18:18:18,964 - trainer - INFO -     loss           : 198.17789408365886
+2022-07-27 18:18:18,965 - trainer - INFO -     learning rate  : [0.001]
+2022-07-27 18:18:18,966 - trainer - INFO -     test_loss      : 219.34534454345703
+2022-07-27 18:18:18,982 - trainer - INFO - Saving current best: model_best.pth at: Examples\Example_trained_Deep-SMOLM_model\models\training_perfect_pixOL_sym_90\0727_181726\model_best.pth ...

@@ -35,7 +35,7 @@ def main(config: ConfigParser):
     params_test = {'batch_size':config['data_loader']['args']['batch_size'],'shuffle':False, 'num_workers':config['data_loader']['args']['num_workers']}
 
     # infor for training/testing set
-    train_test_file_names = {'noise_image_name':config['training_dataset']['noise_image_name'],
+    train_test_file_names = {'noiseless_image_name':config['training_dataset']['noiseless_image_name'],
 'GT_image_name':config['training_dataset']['GT_image_name'],         'GT_list_name':config['training_dataset']['GT_list_name'], 
 'file_folder':config['training_dataset']['file_folder'],                                   
 'batch_size':config['data_loader']['args']['batch_size'],
