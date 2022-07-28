@@ -128,7 +128,7 @@
         "GT_image_name": "image_GT_up",
         "background_data":"img_bkg_",
         "GT_list_name": "GT_list",
-        "file_folder": "/Examples/simulated_biological_fiber/fiber_omega0_100images",
+        "file_folder": "Examples/simulated_biological_fiber/fiber_omega0_100images",
         "number_images":100,
         "batch_size": 16,
         "save_name":"phantom_orientation_estimation_dense_SMs.mat"

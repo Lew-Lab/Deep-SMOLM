@@ -32,7 +32,7 @@ def main(config: ConfigParser):
 
     for data_batch_cur in list_data_batch:
         for data_FoV_cur in list_data_FoV:
-            data_FoV_cur = data_FoV_cur+18
+            data_FoV_cur = data_FoV_cur
             params_est = {'batch_size':config['est_dataset_experiment']['batch_size'],'shuffle':False, 'num_workers':config['data_loader']['args']['num_workers']}
             
             est_file_names = {'noise_image_name':config['est_dataset_experiment']['noise_image_name'],
@@ -86,21 +86,9 @@ if __name__ == '__main__':
     args = argparse.ArgumentParser(description='training parameters')
     args.add_argument('-c', '--config', default="config_orientations.json", type=str,
                       help='config file path (default: None)')
-    args.add_argument('-r', '--resume', default="/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_retrieve_pixOL_com_sym_89/0622_202722/model_best.pth", type=str,
+    #*****************give the trained Deep-SMOLM model address below*****************
+    args.add_argument('-r', '--resume', default="Examples/trained_Deep-SMOLM_model/models/training_retrieve_pixOL_com_sym_90/0720_223400/model_best.pth", type=str,
                       help='path to latest checkpoint (default: None)')
-# 0622_202722  train with background
-# 0601_231555 train with background subtracted
-                    #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_retrieve_pixOL_com_sym_89/0530_235407     #trained with pixOL com using 523/610+unform [-150,150] z distribition;background in two channel don't fixed ratio, intesity is linear distribution
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_retrieve_pixOL_com_sym_90/0217_172852    #trained with pixOL com using 523/610+unform [-100,100] z distribition
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_retrieve_pixOL_com_sym_90/0215_231941    #trained with beads using 523/610 filter
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_retrieve_pixOL_com_sym_90/0211_004116/   #trained with beads using 593/45 filter
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_retrieve_pixOL_com_sym_90/0210_093220
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/train_with_retrieved_pmask_for_pixOL_com_sym_90/0126_012702
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_close2unifrm_sample_M_v2_sym_90/0206_130818
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/intensity_weighted_moments_training_sym_90/0112_220013
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_M_close2uniform_sampled_sym_90/0128_001127
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_corrected_angle_uniform_sampling_sym_90/0128_235439
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_corrected_angle_uniform_sampling_sym_90/0204_110752
     args.add_argument('-d', '--device', default=None, type=str,
                       help='indices of GPUs to enable (default: all)')
 
