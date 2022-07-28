@@ -1,0 +1,198 @@
+{
+    "name": "training_with_corrected_angle_uniform_sampling",
+    "name5": "training_with_close2unifrm_sample_M_v2",
+    "name1": "MC_simulation",
+    "name3": "2SMs_simulation",
+    "name8": "phantom_structure",
+    "name2": "experimental_a_beta",
+    "name9": "training_with_retrieve_pixOL_com",
+    "n_gpu": 1,
+    "seed": 666,
+    "comet": {
+        "api": "HS8aaMUrFL1HqxSzscKX8QGd7",
+        "offline": false,
+        "savedata": true
+    },
+    "arch": {
+        "type": "UNet",
+        "args": {}
+    },
+    "optimizer": {
+        "type": "SGD",
+        "args": {
+            "lr": 0.001,
+            "momentum": 0.9,
+            "weight_decay": 0.0005
+        }
+    },
+    "optimizer1": {
+        "type": "Adam",
+        "args": {
+            "lr": 0.001,
+            "weight_decay": 0.0001
+        }
+    },
+    "scaling_factor": 1000.0,
+    "train_loss": "MSE_loss",
+    "train_loss_change": "l1_loss",
+    "change_traing_loss_function": false,
+    "epoch_change": 15,
+    "test_loss": "MSE_loss",
+    "val_loss": "MSE_loss",
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 80,
+            "gamma": 0.5
+        }
+    },
+    "microscopy_params": {
+        "setup_params": {
+            "H": 60,
+            "W": 60,
+            "pixel_sz_org": 58.6,
+            "upsampling_ratio": 6,
+            "I_thresh": 200
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+        "warmup": 0,
+        "save_dir": "../data/save/",
+        "save_period": 1,
+        "verbosity": 2,
+        "asym": false,
+        "sym": false,
+        "percent": 0.8933,
+        "subset_percent": 1.0,
+        "monitor": "min test_loss",
+        "early_stop": 10
+    },
+    "data_loader": {
+        "type": "MicroscopyDataLoader",
+        "args": {
+            "batch_size": 32,
+            "shuffle": false,
+            "validation_split": 0,
+            "num_workers": 16
+        }
+    },
+    "training_dataset2": {
+        "noise_image_name1": "image_with_poission_bkgdRmvd_up",
+        "noise_image_name": "image_noiseless",
+        "background_name": "img_bkg",
+        "GT_image_name": "image_GT_up",
+        "GT_list_name": "",
+        "file_folder2": "../data/opt_PSF_data_1000vs2/training_20220528_retrieve_pixOL_com_SNR1000vs4_corrected_gamma_linear_photon_linear_distribution_little_3D/",
+        "file_folder1": "../data/opt_PSF_data_1000vs2/training_20220216_retrieve_pixOL_com_SNR1000vs4_large_variance_corrected_angle_uniform_distribution_little_3D/",
+        "file_folder": "../data/opt_PSF_data_1000vs2/training_20220530_retrieve_pixOL_com_SNR1000vs7_randomxybkgration_corrected_gamma_linear_photon_linear_distribution_little_3D/",
+        "number_images": 90000
+    },
+    "training_dataset": {
+        "noise_image_name1": "image_with_poission_bkgdRmvd_up",
+        "noise_image_name2": "image_with_poission",
+        "noise_image_name": "image_noiseless",
+        "background_name": "",
+        "GT_image_name": "image_GT_up",
+        "GT_list_name": "",
+        "file_folder1": "../data/opt_PSF_data_1000vs2/training_20220128_pixOL_SNR1000vs2_large_variance_corrected_angle_uniform_distribution/",
+        "file_folder2": "../data/opt_PSF_data_1000vs2/training_20220526_pixOL_SNR1000vs2_angle_uniform_gamma_linear_photon_linear_heatmap/",
+        "file_folder": "../data/opt_PSF_data_1000vs2/training_20220526_pixOL_SNR1000_2_gamma_linear_distribution_photon_poisson/",
+        "number_images": 30000
+    },
+    "training_dataset3": {
+        "noise_image_name": "image_noiseless",
+        "background_data": "img_bkg_",
+        "GT_image_name": "GT_list",
+        "GT_list_name": "",
+        "file_folder": "../data/opt_PSF_data_1000vs2/training_20220511_pixOL_SNR1000vs2_angle_uniform_1SM_at_center/",
+        "number_images": 30000
+    },
+    "est_dataset": {
+        "noise_image_name1": "image_with_poission_bkgdRmvd_up",
+        "noise_image_name": "image_with_poission",
+        "noise_image_name2": "image_noiseless",
+        "GT_image_name": "image_GT_up",
+        "background_data": "img_bkg_",
+        "GT_list_name": "GT_list",
+        "file_folder": "../data/opt_PSF_data_1000vs2/MC_simulation_20220506_SNR1000vs2_omega0_random_loc",
+        "file_folder1": "../data/opt_PSF_data_1000vs2/MC_simulation_20220121_SNR1000vs2_omega2_random_loc/",
+        "number_images": 300000,
+        "batch_size": 64,
+        "save_name1": "est_1SM_random_loc_opt_PSF_data_1000vs2_with_M_uniform_v2.mat",
+        "save_name": "est_1SM_random_loc_opt_PSF_data_omega0_1000vs2_step2.mat"
+    },
+    "est_dataset9": {
+        "noise_image_name1": "image_with_poission_bkgdRmvd_up",
+        "noise_image_name": "image_with_poission",
+        "GT_image_name": "image_GT_up",
+        "background_data": "img_bkg_",
+        "GT_list_name": "GT_list",
+        "file_folder": "../data/opt_PSF_data_1000vs2/validation_20220121_2SM_fixed_v2_seperation1to20_signal1000_gamma1/",
+        "number_images": 30000,
+        "batch_size": 64,
+        "save_name": "est_2SM_validation_seperation1to1000nm_signal1000_gamma1_deepstorm3D_multilayered.mat"
+    },
+    "est_dataset6": {
+        "noise_image_name": "image_with_poission_bkgdRmvd_up",
+        "GT_image_name": "image_GT_up",
+        "background_data": "img_bkg_",
+        "GT_list_name": "",
+        "file_folder": "../data/opt_PSF_data_1000vs2/phantom_20220127_dense_SMs_1000vs2/",
+        "file_folder1": "../data/opt_PSF_data_1000vs2/phantom_20220216_dense_SMs_1000vs4_retrived_pixOL_com/",
+        "file_folder2": "../data/opt_PSF_data_1000vs2/phantom_20220216_dense_SMs_1000vs4_retrived_pixOL_com_non_unofrm_bkg_in_two_channels/",
+        "file_folder3": "../data/opt_PSF_data_1000vs2/phantom_20220216_dense_SMs_1000vs4_retrived_pixOL_com_non_unofrm_bkg_in_two_channels_little_z/",
+        "number_images": 4000,
+        "batch_size": 16,
+        "save_name": "phantom_orientation_estimation_dense_SMs.mat"
+    },
+    "est_dataset_experiment7": {
+        "noise_image_name": "_centerY_y500_x_180_FoV250_250_",
+        "GT_image_name": "",
+        "file_folder": "../data/experiment_data/20220204_A_beta amyloid/",
+        "batch_size": 16,
+        "number_images_per_dataset": 2000,
+        "number_FoV": 9,
+        "number_dataSet": 5,
+        "starting_dataSet": 16,
+        "upsampling": 6,
+        "offset_name": "offset_centerY_y500_x_180_FoV250_250_",
+        "background_name": "_bkg_centerY_y500_x_180_FoV250_250_",
+        "tophoton": 0.29,
+        "y2x_channel_ratio": 1.715,
+        "save_name": "A_beta_data"
+    },
+    "est_dataset_experiment2": {
+        "noise_image_name": "_centerY_y480_x_157_FoV200_200_",
+        "GT_image_name": "",
+        "file_folder": "../data/experiment_data/20220115 a_beta data/",
+        "batch_size": 16,
+        "number_images_per_dataset": 2000,
+        "number_FoV": 9,
+        "number_dataSet": 5,
+        "starting_dataSet": 31,
+        "upsampling": 6,
+        "offset_name": "offset_centerY_y480_x_157_FoV200_200_",
+        "background_name": "_bkg_centerY_y480_x_157_FoV200_200_",
+        "tophoton": 0.29,
+        "y2x_channel_ratio": 1.715,
+        "save_name": "A_beta_data"
+    },
+    "est_dataset_experiment": {
+        "noise_image_name": "_centerY_y410_x_200_FoV420_220_",
+        "GT_image_name": "",
+        "file_folder": "../data/experiment_data/20220530_A_beta_amyloid/",
+        "batch_size": 16,
+        "number_images_per_dataset": 1000,
+        "number_FoV": 32,
+        "number_dataSet": 5,
+        "starting_dataSet": 9,
+        "upsampling": 6,
+        "offset_name": "offset_centerY_y410_x_200_FoV420_220_",
+        "background_name": "_bkg_centerY_y410_x_200_FoV420_220_",
+        "tophoton": 0.29,
+        "y2x_channel_ratio": 1.145,
+        "save_name": "A_beta_data"
+    },
+    "exper_name": "training_with_corrected_angle_uniform_samplingMicroscopyDataLoaderUNet-Seed=666"
+}

@@ -1,15 +1,5 @@
-%% description: for generating training data of trispot PSF
-% the 4 channel GT data + poisson data are *combined* together for quick
-% reading
-
-%% 2020/02/20 Ting: correct the noise model; 
-%                   generate a small size basis matrix
-%                   change to high SNR situation: signal 1000, background 5
-% 2020/02/22 Asheq: Modified saving the x and y channel psf map without
-% noise
-
-clear;
 clc;
+clear;
 
 
 %% parameter of the microscopy
@@ -17,7 +7,7 @@ clc;
 % give the save address for generated data
 % ********************************
 
-save_folder = '..\Examples\Example_training_data\'; 
+save_folder = '..\Examples\training_data\example1_100images'; 
 % ********************************
 image_size = 60;  % the pixel size of the simulation image (feel free to change it)
 upsampling_ratio  = 6;
@@ -46,7 +36,7 @@ SM_num_min = 7;
 
 
 for ii = 1:n_images %each 4 images, and total 2000*4 images
-    ii
+
 if rem(ii,100)==0
    ii
 end
@@ -65,12 +55,6 @@ image_GT_up = zeros(5,image_size*upsampling_ratio,image_size*upsampling_ratio);
 
 n_SMs = floor(rand(1)*SM_num_range+SM_num_min); % number of single molecules
 [thetaD_SMs,phiD_SMs,gamma_SMs] = generate_rand_angleD_gamma_linear_distribution(n_SMs);
-%[thetaD_SMs,phiD_SMs,gamma_SMs] = generate_rand_angleD(n_SMs);
-%[thetaD_SMs,phiD_SMs,gamma_SMs] = generate_rand_angleD_with_M_uniformly_sampled_v2(n_SMs);
-
-%theta angle of SMs, note theta is in the range of (0,90) degree
-%phi angle of SMs, note phi is in the range of (0,360) degree
-%gamma (orientaiton constraint) is used to represent alpha angle. it is in the range of (0,1)
 
 
 x_SMs = (0.10+0.8*rand(1,n_SMs))*image_size-(image_size)/2; %x location, in unit of pixles
@@ -86,11 +70,10 @@ x_grd(1:n_SMs) = x_SMs.'; y_grd(1:n_SMs) = y_SMs.';  x_phy(1:n_SMs) = x_SMs_phy.
 thetaD_grd(1:n_SMs) = thetaD_SMs.'; phiD_grd(1:n_SMs)=phiD_SMs.'; 
 gamma_grd(1:n_SMs) = gamma_SMs.'; I_grd(1:n_SMs) = signal_SMs.'; 
 
-%background = rand(1)*2-1+background_avg;
+
 background = background_avg;
 
 %% forward imaging system
-
 
 [muxx,muyy,muzz,muxy,muxz,muyz] = Quickly_rotating_matrix_angleD_gamma_to_M(thetaD_SMs,phiD_SMs,gamma_SMs);
 M = [muxx;muyy;muzz;muxy;muxz;muyz];
@@ -104,11 +87,9 @@ I = ones(image_size,image_size*2)*background;
 bkg_img = I;
 Ix = I(1:image_size,1:image_size);
 Iy = I(1:image_size,image_size+1:image_size*2);
-% I = imresize(I,size(I)*upsampling_ratio,'nearest');
 I_basis = zeros(image_size*upsampling_ratio,image_size*upsampling_ratio);
-%I_basis = imresize(I_basis,size(I_basis)*upsampling_ratio,'nearest');
 
-% four channels
+% 6 channels
 I_intensity_up = I_basis;
 I_theta_up = I_intensity_up;
 I_phi_up = I_intensity_up;
@@ -147,8 +128,6 @@ I_intensity_up = I_intensity_up+temp1*signal_SMs(i);
 I_theta_up = I_theta_up+temp1*thetaD_SMs(i);
 I_phi_up = I_phi_up+temp1*phiD_SMs(i);
 
-%I_dx_up = I_dx_up+temp1*(x_SMs(i)*upsampling_ratio-round(x_SMs(i)*upsampling_ratio));
-%I_dy_up = I_dy_up+temp1*(y_SMs(i)*upsampling_ratio-round(y_SMs(i)*upsampling_ratio));
 
 temp = imtranslate(h_basis,[(x_SMs(i)*upsampling_ratio),(y_SMs(i)*upsampling_ratio)],'bicubic');
 I_intensity_gaussian = I_intensity_gaussian+temp*signal_SMs(i);
@@ -168,9 +147,6 @@ I_XZ = I_XZ+temp*muxz(i);
 I_YZ = I_YZ+temp*muyz(i);
 
 end
-
-% I_poissx = poissrnd(Ix); % if you need multiple realization for a single ground truth, modify here
-% I_poissy = poissrnd(Iy);
 
 image_noiseless(1,:,:) = Ix;
 image_noiseless(2,:,:) = Iy;

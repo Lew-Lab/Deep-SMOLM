@@ -58,7 +58,10 @@ def resume_checkpoint(self, resume_path):
     """
     resume_path = str(resume_path)
     self.logger.info("Loading checkpoint: {} ...".format(resume_path))
-    checkpoint = torch.load(resume_path)
+    if self.device.type=='cpu':
+        checkpoint = torch.load(resume_path,map_location=torch.device('cpu'))
+    else:
+        checkpoint = torch.load(resume_path)
     self.start_epoch = checkpoint['epoch'] + 1
     self.mnt_best = checkpoint['monitor_best']
 

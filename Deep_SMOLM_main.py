@@ -102,10 +102,6 @@ if __name__ == '__main__':
     args.add_argument('-d', '--device', default=None, type=str,
                       help='indices of GPUs to enable (default: all)')
 
-                      #0515_203657
-#"/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_retrieve_pixOL_com_sym_90/0527_185236/model_best.pth"
-                      #/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_retrieve_pixOL_com_sym_90/0210_011251
-
     CustomArgs = collections.namedtuple('CustomArgs', 'flags type target')
     options = [
         CustomArgs(['--lr', '--learning_rate'], type=float, target=('optimizer', 'args', 'lr')),

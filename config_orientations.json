@@ -1,14 +1,17 @@
 {   
-    "****[name]*******": "name of the current running project;",
+    "****[name]*******": "name of the current running project; only [name] will read by the code, other names won't be read",
     "****[n_gpu],[resume_location],[Deep-SMOLM_model_trained]*******": "change [n_gpu] to 0 if use cpu; give the model location if you are doing estimation or give [resume_location] if you are training from previuos checkpoint",
-    "name": "training_perfect_pixOL",
+    "name2": "training_perfect_pixOL",
+    "name1":"training_retrieve_pixOL_com",
+    "name": "phantom_structure",
+    "name3": "experimental_a_beta",
     "n_gpu": 0,
     "resume_location":"",
     "Deep-SMOLM_model_trained":"/Examples/Example_trained_Deep-SMOLM_model/",
     "seed": 666,
 
     
-    "****[comet]*******": "your account at wwww.comet.ml, a website for in-live plotting the training/testing results",
+    "****[comet]*******": "build your own api key number at wwww.comet.ml, a website for in-live plotting the training/testing results",
     "comet": {
         "api": "HS8aaMUrFL1HqxSzscKX8QGd7",
         "offline": false,
@@ -86,7 +89,7 @@
     "trainer": {
         "epochs": 100,
         "warmup": 0,
-        "save_dir": "Examples/Example_trained_Deep-SMOLM_model",
+        "save_dir": "Examples/trained_Deep-SMOLM_model",
         "save_period": 1,
         "verbosity": 2,
         "asym": false,
@@ -109,24 +112,24 @@
     },
 
 
-    "****[training_dataset]*******":"Please download the example training data at @OSF",
+    "****[training_dataset]*******":"the current address only contains 100 images. Please download the full example training data at @OSF, or generate through forward model",
     "training_dataset": {
         "noiseless_image_name":"image_noiseless",
         "background_name":"",
         "GT_image_name": "image_GT_up",
         "GT_list_name": "",
-        "file_folder": "Examples/Example_training_data",
+        "file_folder": "Examples/training_data/example1_100images",
         "number_images":100
     },
 
-    "****[est_dataset]*******":"Please download the example estimation data at @OSF",
+    "****[est_dataset]*******":"the current address only contains 100 images. Please download the example estimation data at @OSF, or generate through forward model",
     "est_dataset": {
         "noise_image_name":"image_with_poission",
         "GT_image_name": "image_GT_up",
         "background_data":"img_bkg_",
         "GT_list_name": "GT_list",
-        "file_folder": "/Examples/Example_training_data/",
-        "number_images":4000,
+        "file_folder": "/Examples/simulated_biological_fiber/fiber_omega0_100images",
+        "number_images":100,
         "batch_size": 16,
         "save_name":"phantom_orientation_estimation_dense_SMs.mat"
     },

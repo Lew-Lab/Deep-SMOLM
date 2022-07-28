@@ -1,28 +1,20 @@
 import comet_ml
 import argparse
 import collections
-#import sys
-#import requests
-#import socket
 import torch
-#import mlflow
-#import mlflow.pytorch
 from data_loader.MicroscopyDataloader_est import MicroscopyDataLoader_est
 #from data_loader.MicroscopyDataloader import MicroscopyDataLoader
 #from data_loader.MicroscopyDataloader_singleSM import MicroscopyDataLoader_singleSM as MicroscopyDataLoader
 from torch.utils.data import DataLoader
 import model.loss as module_loss
 import model.metric as module_metric
-#import model.model as module_arch
 import model.model as module_arch
-#import model.resnet as module_arch
 from parse_config import ConfigParser
 from trainer.trainer_main import *
 from trainer.est_main import *
 from collections import OrderedDict
 import random
 import numpy as np
-#import pixiedust
 
 
 def main(config: ConfigParser):
@@ -76,11 +68,9 @@ if __name__ == '__main__':
     args = argparse.ArgumentParser(description='training parameters')
     args.add_argument('-c', '--config', default="config_orientations.json", type=str,
                       help='config file path (default: None)')
-    args.add_argument('-r', '--resume', default="/home/wut/Documents/Deep-SMOLM/data/save/models/training_with_retrieve_pixOL_com_sym_89/0709_175726/model_best.pth", type=str,
+    #*****************give the trained Deep-SMOLM model address below*****************
+    args.add_argument('-r', '--resume', default="Examples/trained_Deep-SMOLM_model/models/training_perfect_pixOL_sym_90/0601_170945/model_best.pth", type=str,
                       help='path to latest checkpoint (default: None)')
-                      #training_with_corrected_angle_uniform_sampling_sym_89/0601_170945               final best choice for simulated data
-                      #training_with_retrieve_pixOL_com_sym_89/0622_202722/model_best.pth              final best choice for experimental data with focal plane drift(trained with background)
-                      #/training_with_retrieve_pixOL_com_sym_89/0709_175726                            final best choice for experimental data without focal plane drift(trained with background)
 
     args.add_argument('-d', '--device', default=None, type=str,
                       help='indices of GPUs to enable (default: all)')
