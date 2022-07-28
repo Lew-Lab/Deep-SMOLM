@@ -1,6 +1,6 @@
 {   
     "****[name]*******": "name of the current running project; only [name] will read by the code, other names won't be read",
-    "****[n_gpu],[resume_location],[Deep-SMOLM_model_trained]*******": "change [n_gpu] to 0 if use cpu; give the model location if you are doing estimation or give [resume_location] if you are training from previuos checkpoint",
+    "****[n_gpu],[resume_location],[Deep-SMOLM_model_trained]*******": "change [n_gpu] to 0 if use cpu; give the [Deep-SMOLM_model_trained] location if you are doing estimation or give [resume_location] if you are training from previuos checkpoint",
     "name2": "training_perfect_pixOL",
     "name1":"training_retrieve_pixOL_com",
     "name": "phantom_structure",
@@ -11,7 +11,7 @@
     "seed": 666,
 
     
-    "****[comet]*******": "build your own api key number at wwww.comet.ml, a website for in-live plotting the training/testing results",
+    "****[comet]*******": "use your own api key number at comet.ml, a website for live visualization of the training/testing results",
     "comet": {
         "api": "HS8aaMUrFL1HqxSzscKX8QGd7",
         "offline": false,
@@ -26,14 +26,14 @@
     },
 
 
-    "****[arch]*******": "choise of the neural network archtechture; Deep-SMOLM use the neural network archtecture built in [model/model.py]",
+    "****[arch]*******": "neural network archtechture; Deep-SMOLM use archtecture built in [model/model.py]",
     "arch": {
         "type": "ConvNet",
         "args": {}
     },
 
 
-    "****[optimizer]*******": "choice of the optimization for neural network",
+    "****[optimizer]*******": "optimization parameters for neural network",
     "optimizer": {
         "type": "SGD",
         "args":{
@@ -52,7 +52,7 @@
         }
     },
 
-    "****[parameters below]*******": "choice of the loss function",
+    "****[parameters below]*******": "loss function related parameters",
     "scaling_factor": 1000.0,
     "train_loss": "MSE_loss",
     "train_loss_change": "l1_loss",
