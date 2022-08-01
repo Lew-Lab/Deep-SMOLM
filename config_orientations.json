@@ -1,9 +1,9 @@
 {   
     "****[name]*******": "name of the current running project; only [name] will read by the code, other names won't be read",
     "****[n_gpu],[resume_location],[Deep-SMOLM_model_trained]*******": "change [n_gpu] to 0 if use cpu; give the [Deep-SMOLM_model_trained] location if you are doing estimation or give [resume_location] if you are training from previuos checkpoint",
-    "name2": "training_perfect_pixOL",
+    "name": "training_perfect_pixOL",
     "name1":"training_retrieve_pixOL_com",
-    "name": "phantom_structure",
+    "name2": "phantom_structure",
     "name3": "experimental_a_beta",
     "n_gpu": 0,
     "resume_location":"",
@@ -13,14 +13,7 @@
     
     "****[comet]*******": "use your own api key number at comet.ml, a website for live visualization of the training/testing results",
     "comet": {
-        "api": "HS8aaMUrFL1HqxSzscKX8QGd7",
-        "offline": false,
-        "savedata": true
-    },
-
-    
-    "comet1": {
-        "api": "your API key",
+        "api": "enter your API key here",
         "offline": false,
         "savedata": false
     },
