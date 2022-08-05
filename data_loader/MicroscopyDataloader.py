@@ -38,6 +38,7 @@ class MicroscopyDataLoader():
         XY_channel = XY_channel.astype('float32') 
         XY_channel = np.random.poisson(XY_channel)
 
+        ## uncomment if you want to train with background subtracted image
         # if self.background_name=="":
         #     bkg_channel=2
         # else:
@@ -51,19 +52,13 @@ class MicroscopyDataLoader():
               
         Input_channel = XY_channel.astype('float32') 
             
-        # load training GT batch by batch 
-        if self.GT_image_name=="":
-            GT_list = sio.loadmat(self.file_folder+"/"+self.GT_list_name+ID+'.mat') 
-            GT_list =np.array(GT_list['self.GT_list_name']) # 6 480 480 1
-            #intensity_grid,theta_grid,phi_grid,gamma_grid = GT_list_to_grid(GT_list, self.setup_params)
-        else:
-            GT_image = sio.loadmat(self.file_folder+"/"+self.GT_image_name+ID+'.mat') 
-            GT_channel = np.array(GT_image[self.GT_image_name]) # 6 480 480 1
-            GT_channel = GT_channel.transpose(0,1,2)
-            intensity_gaussian = GT_channel[0:1,:,:]
-            #XX,YY,ZZ,XY,XZ,YZ = GT_channel[1:2,:,:],GT_channel[2:3,:,:],GT_channel[3:4,:,:],GT_channel[4:5,:,:],GT_channel[5:6,:,:],GT_channel[6:7,:,:]
-            sXX,sYY,sZZ,sXY,sXZ,sYZ = GT_channel[7:8,:,:],GT_channel[8:9,:,:],GT_channel[9:10,:,:],GT_channel[10:11,:,:],GT_channel[11:12,:,:],GT_channel[12:13,:,:]
-            
+        # read the GT images
+        GT_image = sio.loadmat(self.file_folder+"/"+self.GT_image_name+ID+'.mat') 
+        GT_channel = np.array(GT_image[self.GT_image_name]) # 6 480 480 1
+        GT_channel = GT_channel.transpose(0,1,2)
+        intensity_gaussian = GT_channel[0:1,:,:]
+        sXX,sYY,sZZ,sXY,sXZ,sYZ = GT_channel[1:2,:,:],GT_channel[2:3,:,:],GT_channel[3:4,:,:],GT_channel[4:5,:,:],GT_channel[5:6,:,:],GT_channel[6:7,:,:]
+        
             
 
         Output_channel = np.concatenate((intensity_gaussian,sXX,sYY,sZZ,sXY,sXZ,sYZ), axis = 0)    

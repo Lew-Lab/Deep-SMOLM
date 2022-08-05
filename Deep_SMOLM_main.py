@@ -1,27 +1,18 @@
 import comet_ml
 import argparse
 import collections
-#import sys
-#import requests
-#import socket
 import torch
-#import mlflow
-#import mlflow.pytorch
 from data_loader.MicroscopyDataloader import MicroscopyDataLoader
-#from data_loader.MicroscopyDataloader_singleSM import MicroscopyDataLoader_singleSM as MicroscopyDataLoader
 from torch.utils.data import DataLoader
 import model.loss as module_loss
 import model.metric as module_metric
-#import model.model as module_arch
 import model.model as module_arch
-#import model.resnet as module_arch
 from parse_config import ConfigParser
 from trainer.trainer_main import *
 from trainer.est_main import *
 from collections import OrderedDict
 import random
 import numpy as np
-#import pixiedust
 import time
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
@@ -34,7 +25,7 @@ def main(config: ConfigParser):
 
     params_test = {'batch_size':config['data_loader']['args']['batch_size'],'shuffle':False, 'num_workers':config['data_loader']['args']['num_workers']}
 
-    # infor for training/testing set
+    # parameters for the testing set
     train_test_file_names = {'noiseless_image_name':config['training_dataset']['noiseless_image_name'],
 'GT_image_name':config['training_dataset']['GT_image_name'],         'GT_list_name':config['training_dataset']['GT_list_name'], 
 'file_folder':config['training_dataset']['file_folder'],                                   
@@ -42,7 +33,7 @@ def main(config: ConfigParser):
 'setup_params':config['microscopy_params']['setup_params'], 'background_name':config['training_dataset']['background_name']}
        
     
-   
+   # seperate the data into training data and test data
     number_images = config['training_dataset']['number_images']  
     percentage = config['trainer']['percent']                                                                   
     numb_training = np.floor(number_images*percentage) 
@@ -52,8 +43,6 @@ def main(config: ConfigParser):
     training_set = MicroscopyDataLoader(list_ID_train, **train_test_file_names)
     training_generator = DataLoader(training_set, **params_train)
     
-
-    
     list_ID_test = np.int_(np.arange(numb_training+1+1,numb_training+numb_testing+1))
     test_set = MicroscopyDataLoader(list_ID_test, **train_test_file_names)
     test_generator = DataLoader(test_set, **params_test)
@@ -61,22 +50,14 @@ def main(config: ConfigParser):
     print(len(training_generator)*batch_size, len(test_generator)*batch_size)
 
 
-
-    # build model architecture, then print to console
+    # read the model archtecture choice
     model = getattr(module_arch, config["arch"]["type"])()
 
-    # get function handles of loss and metrics
-    #
 
-    train_loss_metri = getattr(module_loss, config['train_loss'])
-    train_loss_change_metri = getattr(module_loss, config['train_loss_change'])
-    test_loss_metri = getattr(module_loss, config['test_loss'])
-
-    # build optimizer, learning rate scheduler. delete every lines containing lr_scheduler for disabling scheduler
+    # read parameters for optimizer, learning rate scheduler. delete every lines containing lr_scheduler for disabling scheduler
     trainable_params = filter(lambda p: p.requires_grad, model.parameters())
 
     optimizer = config.initialize('optimizer', torch.optim, [{'params': trainable_params}])
-    #scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=5, verbose=True, min_lr=1e-6)
 
     lr_scheduler = config.initialize('lr_scheduler', torch.optim.lr_scheduler, optimizer)
 
@@ -97,8 +78,8 @@ if __name__ == '__main__':
     args = argparse.ArgumentParser(description='training parameters')
     args.add_argument('-c', '--config', default="config_orientations.json", type=str,
                       help='config file path (default: None)')
-    args.add_argument('-r', '--resume', default=None, type=str,
-                      help='path to latest checkpoint (default: None)')
+    # args.add_argument('-r', '--resume', default=None, type=str,
+    #                   help='path to latest checkpoint (default: None)')
     args.add_argument('-d', '--device', default=None, type=str,
                       help='indices of GPUs to enable (default: all)')
 

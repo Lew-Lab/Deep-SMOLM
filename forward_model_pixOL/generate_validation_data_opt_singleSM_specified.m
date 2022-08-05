@@ -43,6 +43,7 @@ pixel_size = 58.6; %in unit of um
 
 
 %% gaussian filter
+
 h_shape = [7,7];
 h_sigma = 1;
 [x,y] = meshgrid([-(h_shape(1)-1)/2:(h_shape(1)-1)/2]);

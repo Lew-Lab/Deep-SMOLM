@@ -1,7 +1,6 @@
 from cmath import nan
 import torch
 import torch.nn.functional as F
-from model.loss import matlab_style_gauss2D
 from skimage.measure import label
 import numpy as np
 import matplotlib.pyplot as plt
@@ -27,6 +26,7 @@ def matlab_style_gauss2D(shape,sigma):
     #print("max"+str(maxV))
     h = h.astype('float32')
     return h
+
 
 
 def postprocessing(config, output,idx):
