@@ -3,8 +3,6 @@ import argparse
 import collections
 import torch
 from data_loader.MicroscopyDataloader_est import MicroscopyDataLoader_est
-#from data_loader.MicroscopyDataloader import MicroscopyDataLoader
-#from data_loader.MicroscopyDataloader_singleSM import MicroscopyDataLoader_singleSM as MicroscopyDataLoader
 from torch.utils.data import DataLoader
 import model.loss as module_loss
 import model.metric as module_metric
@@ -19,7 +17,7 @@ import numpy as np
 
 def main(config: ConfigParser):
    
-    # parameters for the training and testing set
+    # parameters for the estimation data
 
     params_est = {'batch_size':config['est_dataset']['batch_size'],'shuffle':False, 'num_workers':config['data_loader']['args']['num_workers']}
 
@@ -38,12 +36,7 @@ def main(config: ConfigParser):
 
     # build model architecture, then print to console
     model = getattr(module_arch, config["arch"]["type"])()
-
-    # get function handles of loss and metrics
-    
-    
-
-    
+    model_location = config['Deep-SMOLM_model_trained']
 
     # build optimizer, learning rate scheduler. delete every lines containing lr_scheduler for disabling scheduler
     trainable_params = filter(lambda p: p.requires_grad, model.parameters())
@@ -52,14 +45,13 @@ def main(config: ConfigParser):
 
     lr_scheduler = config.initialize('lr_scheduler', torch.optim.lr_scheduler, optimizer)
 
+    
 
-    trainer = Est(model, optimizer,
+    trainer = Est(model,model_location, optimizer,
                     config=config,
                     valid_data_loader=None,
                     est_data_loader=est_generator)
                                                                            
-
-    #trainer.train()
     trainer.est()
 
 
@@ -68,8 +60,7 @@ if __name__ == '__main__':
     args = argparse.ArgumentParser(description='training parameters')
     args.add_argument('-c', '--config', default="config_orientations.json", type=str,
                       help='config file path (default: None)')
-    #*****************give the trained Deep-SMOLM model address below*****************
-    args.add_argument('-r', '--resume', default="Examples/trained_Deep-SMOLM_model/models/training_perfect_pixOL_sym_90/0601_170945/model_best.pth", type=str,
+    args.add_argument('-r', '--resume', default=None, type=str,
                       help='path to latest checkpoint (default: None)')
 
     args.add_argument('-d', '--device', default=None, type=str,

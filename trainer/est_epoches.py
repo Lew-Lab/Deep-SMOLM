@@ -12,7 +12,7 @@ from numpy import inf
 from trainer.trainer_utils import *
 from logger import CometWriter
 import scipy.io as sio
-from model.metric import postprocessing,postprocessingv2
+from model.metric import postprocessing
 
 
 
@@ -88,10 +88,7 @@ def valid_epoch(self, epoch):
                         I_GT_all =  np.concatenate((I_GT_all,I_GT),axis=0)
                         I_est_all =  np.concatenate((I_est_all,I_est),axis=0)
 
-    
-    # sio.savemat(str(self.checkpoint_dir / "1SM_est_results.mat"),{'orien_est_all':orien_est_all,
-    # 'orient_GT_all':orient_GT_all,'M_est_all':M_est_all,'bias_con_all':bias_con_all,'data':data,'label':label,'output':output,
-    # 'I_GT_all':I_GT_all,'I_est_all':I_est_all}) 
+
     return orien_est_all,orient_GT_all, M_est_all,bias_con_all,data,label,output,I_GT_all,I_est_all         
     
 def est_withou_GT(self):

@@ -1,0 +1,4 @@
+2022-08-09 00:07:38,999 - trainer - INFO -     epoch          : 1
+2022-08-09 00:07:38,999 - trainer - INFO -     loss           : 49.163564936319986
+2022-08-09 00:07:39,004 - trainer - INFO -     learning rate  : [0.001]
+2022-08-09 00:07:39,004 - trainer - INFO -     test_loss      : 59.60534477233887

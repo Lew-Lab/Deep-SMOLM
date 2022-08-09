@@ -37,12 +37,14 @@ def main(config: ConfigParser):
     number_images = config['training_dataset']['number_images']  
     percentage = config['trainer']['percent']                                                                   
     numb_training = np.floor(number_images*percentage) 
-    numb_testing = np.floor(number_images*(1-percentage))                                       
+    numb_testing = np.floor(number_images*(1-percentage))      
+                                    
     # instantiate the data class and create a datalaoder for training
     list_ID_train = np.int_(np.arange(1,numb_training+1))
     training_set = MicroscopyDataLoader(list_ID_train, **train_test_file_names)
     training_generator = DataLoader(training_set, **params_train)
     
+    # instantiate the data class and create a datalaoder for testing
     list_ID_test = np.int_(np.arange(numb_training+1+1,numb_training+numb_testing+1))
     test_set = MicroscopyDataLoader(list_ID_test, **train_test_file_names)
     test_generator = DataLoader(test_set, **params_test)
@@ -78,8 +80,8 @@ if __name__ == '__main__':
     args = argparse.ArgumentParser(description='training parameters')
     args.add_argument('-c', '--config', default="config_orientations.json", type=str,
                       help='config file path (default: None)')
-    # args.add_argument('-r', '--resume', default=None, type=str,
-    #                   help='path to latest checkpoint (default: None)')
+    args.add_argument('-r', '--resume', default=None, type=str,
+                      help='path to latest checkpoint (default: None)')
     args.add_argument('-d', '--device', default=None, type=str,
                       help='indices of GPUs to enable (default: all)')
 

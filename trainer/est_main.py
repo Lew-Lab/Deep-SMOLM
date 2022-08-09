@@ -22,7 +22,7 @@ class Est:
     Note:
         Inherited from BaseTrainer.
     """
-    def __init__(self, model, optimizer,config,valid_data_loader=None, est_data_loader=None):
+    def __init__(self, model, model_loc, optimizer,config,valid_data_loader=None, est_data_loader=None):
         # pass all variables to self
         #prepare the training device
         # setup GPU device if available, move model into configured device
@@ -42,11 +42,8 @@ class Est:
         # configuration to monitor model performance and save best
 
         self.checkpoint_dir = self.config.save_dir
-        if self.config.resume is not None:
-            resume_checkpoint(self,self.config.resume)
-
-        else:
-            NotImplementedError('trained model is required for esting/validation')
+        #load trained model (Deep-SMOLM) from saved location
+        resume_trained_model(self,model_loc)
 
         #training metric
         
