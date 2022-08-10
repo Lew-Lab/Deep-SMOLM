@@ -5,7 +5,7 @@ import torch
 from data_loader.MicroscopyDataloader_est_experiment import MicroscopyDataLoader_est_experiment
 from torch.utils.data import DataLoader
 import model.loss as module_loss
-import model.metric as module_metric
+import model.postprocessing_main as module_metric
 import model.model as module_arch
 from parse_config import ConfigParser
 from trainer.trainer_main import *
@@ -13,7 +13,6 @@ from trainer.est_main import *
 from collections import OrderedDict
 import random
 import numpy as np
-#import pixiedust
 
 
 def main(config: ConfigParser):

@@ -28,27 +28,21 @@ class MicroscopyDataLoader_est():
         ID = self.list_IDs[idx]
         ID = str(ID)
         #print('*****'+ID)
-        # load training image batch by batch
+        # load estimation image 
         noise_image = sio.loadmat(self.file_folder+"/"+self.noise_image_name+ID+'.mat') 
         XY_channel =np.array(noise_image[self.noise_image_name]) # 6 480 480 1
-        #XY_channel = np.expand_dims(XY_channel,axis=-1)
         XY_channel = XY_channel.transpose(0,1,2) # 2 is the background
-
-        # XY_channel[XY_channel<0]=0
-        # XY_channel = XY_channel.astype('float32') 
-        # XY_channel = np.random.poisson(XY_channel)
                             
-        
 
-        if self.background_name=="":
-            bkg_channel=2
-        else:
-            bkg_image = sio.loadmat(self.file_folder+"/"+self.background_name+ID+'.mat') 
-            bkg_channel = np.array(bkg_image[self.background_name]) # 6 480 480 1
-            bkg_channel =bkg_channel.transpose(0,1,2)
-            bkg_channel = bkg_channel.astype('float32') 
-
+        # if self.background_name=="":
+        #     bkg_channel=2
+        # else:
+        #     bkg_image = sio.loadmat(self.file_folder+"/"+self.background_name+ID+'.mat') 
+        #     bkg_channel = np.array(bkg_image[self.background_name]) # 6 480 480 1
+        #     bkg_channel =bkg_channel.transpose(0,1,2)
+        #     bkg_channel = bkg_channel.astype('float32') 
         #Input_channel = XY_channel.astype('float32')-bkg_channel 
+        
         Input_channel = XY_channel.astype('float32')
 
         if self.GT_list_name != "":
@@ -58,27 +52,7 @@ class MicroscopyDataLoader_est():
         else:
             GT_list_final = 0
 
-        # GT_image = sio.loadmat(self.file_folder+"/"+self.GT_image_name+ID+'.mat') 
-        # GT_channel =np.array(GT_image[self.GT_image_name]) # 6 480 480 1
-        # #GT_channel = np.expand_dims(GT_channel,axis=-1)
-        # GT_channel = GT_channel.transpose(0,1,2)
-        # intensity_grid,theta_grid,phi_grid,gamma_grid = GT_channel[0:1,:,:],GT_channel[1:2,:,:],GT_channel[2:3,:,:],GT_channel[3:4,:,:]
-        # intensity_gaussian = GT_channel[4:5,:,:]
-        # sXX,sYY,sZZ,sXY,sXZ,sYZ = GT_channel[5:6,:,:],GT_channel[6:7,:,:],GT_channel[7:8,:,:],GT_channel[8:9,:,:],GT_channel[9:10,:,:],GT_channel[10:11,:,:]
-        # #modified_gamma, sXX_wo_gamma, sYY_wo_gamma, sZZ_wo_gamma = GT_channel[11:12,:,:],GT_channel[12:13,:,:],GT_channel[13:14,:,:],GT_channel[14:15,:,:]
-
-
-        # Intensity_mask = np.array(intensity_grid,copy=True)
-        # Intensity_mask[Intensity_mask>1]=1  
-            
-        # Output_channel = np.concatenate((intensity_grid,Intensity_mask,theta_grid,phi_grid,gamma_grid,intensity_gaussian,sXX,sYY,sZZ,sXY,sXZ,sYZ), axis = 0)
-        # Output_channel = Output_channel.astype('float32')   
-               
             
         return Input_channel, self.list_IDs[idx], GT_list_final
         
     
-def normalize_im(im, dmean, dstd):
-    im_norm = np.zeros(np.shape(im),dtype=np.float32)
-    im_norm = (im - dmean)/dstd
-    return im_norm	

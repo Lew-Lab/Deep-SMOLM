@@ -5,7 +5,7 @@ import torch
 from data_loader.MicroscopyDataloader_est import MicroscopyDataLoader_est
 from torch.utils.data import DataLoader
 import model.loss as module_loss
-import model.metric as module_metric
+import model.postprocessing_main as module_metric
 import model.model as module_arch
 from parse_config import ConfigParser
 from trainer.trainer_main import *

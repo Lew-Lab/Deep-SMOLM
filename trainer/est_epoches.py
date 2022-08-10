@@ -8,7 +8,7 @@ from numpy import inf
 from trainer.trainer_utils import *
 from logger import CometWriter
 import scipy.io as sio
-from model.metric import postprocessing
+from model.postprocessing_main import postprocessing
     
     
 def est_epoches(self):

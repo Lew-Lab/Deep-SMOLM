@@ -38,7 +38,7 @@ class MicroscopyDataLoader():
         XY_channel = XY_channel.astype('float32') 
         XY_channel = np.random.poisson(XY_channel)
 
-        ## uncomment if you want to train with background subtracted image
+        ## uncomment if you want to train with background subtracted image************************
         # if self.background_name=="":
         #     bkg_channel=2
         # else:
@@ -46,9 +46,8 @@ class MicroscopyDataLoader():
         #     bkg_channel = np.array(bkg_image[self.background_name]) # 6 480 480 1
         #     bkg_channel =bkg_channel.transpose(0,1,2)
         #     bkg_channel = bkg_channel.astype('float32') 
-
-
         #XY_channel = XY_channel-bkg_channel
+        #************************************************************************************************
               
         Input_channel = XY_channel.astype('float32') 
             
