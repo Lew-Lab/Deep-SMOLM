@@ -27,7 +27,6 @@ def main(config: ConfigParser):
 'batch_size':config['est_dataset']['batch_size'],
 'setup_params':config['microscopy_params']['setup_params']}
 
-    
 
     list_ID_est = np.int_(np.arange(1,config['est_dataset']['number_images']+1))
     est_set = MicroscopyDataLoader_est(list_ID_est, **est_file_names)
@@ -36,6 +35,7 @@ def main(config: ConfigParser):
 
     # build model architecture, then print to console
     model = getattr(module_arch, config["arch"]["type"])()
+    # use the trained Deep-SMOLM that saved in location below 
     model_location = config['Deep-SMOLM_model_trained']
 
     # build optimizer, learning rate scheduler. delete every lines containing lr_scheduler for disabling scheduler
@@ -47,12 +47,11 @@ def main(config: ConfigParser):
 
     
 
-    trainer = Est(model,model_location, optimizer,
+    estimator = Est(model,model_location, optimizer,
                     config=config,
-                    valid_data_loader=None,
                     est_data_loader=est_generator)
                                                                            
-    trainer.est()
+    estimator.est()
 
 
 

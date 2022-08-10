@@ -61,14 +61,12 @@ def main(config: ConfigParser):
             lr_scheduler = config.initialize('lr_scheduler', torch.optim.lr_scheduler, optimizer)
 
 
-            trainer = Est(model,model_location, optimizer,
+            estimator = Est(model,model_location, optimizer,
                             config=config,
-                            valid_data_loader=None,
                             est_data_loader=est_generator)
                                                                                 
 
-            #trainer.train()
-            trainer.est_experiment(data_batch_cur,data_FoV_cur)
+            estimator.est_experiment(data_batch_cur,data_FoV_cur)
     
 
 

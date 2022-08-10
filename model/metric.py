@@ -32,6 +32,7 @@ def matlab_style_gauss2D(shape,sigma):
 def postprocessing(config, output,idx):
     
     I_thresh = config['microscopy_params']['setup_params']['I_thresh']
+    rad_thred = config['microscopy_params']['setup_params']['rad_thred']
 
 
     has_SM = 0
@@ -48,7 +49,7 @@ def postprocessing(config, output,idx):
     for ii in range(B):
         pre_est_cur = output[ii,:,:,:]
         #I_thresh = 50
-        x_est_save,y_est_save, est_img_crop = postprocessing_loc(pre_est_cur, I_thresh)
+        x_est_save,y_est_save, est_img_crop = postprocessing_loc(pre_est_cur, I_thresh,rad_thred)
         N_SM = np.size(x_est_save)
         if N_SM==0:
            aaa=1
@@ -91,8 +92,9 @@ def postprocessing(config, output,idx):
 def loc_angle_est(config, crop_est_images, x_gt,y_gt,x_pred,y_pred):
     pixel_size_org = config['microscopy_params']['setup_params']['pixel_sz_org']
     upsampling = config['microscopy_params']['setup_params']['upsampling_ratio'] 
+    rad_thred = config['microscopy_params']['setup_params']['rad_thred']
     pixel_size = pixel_size_org/upsampling
-    rad = 3
+    rad = rad_thred
 
     HW_grid = np.meshgrid(np.arange(rad*2+1)-rad,np.arange(rad*2+1)-rad)
     
@@ -167,10 +169,10 @@ def loc_angle_est(config, crop_est_images, x_gt,y_gt,x_pred,y_pred):
 
 
 
-def postprocessing_loc(est_images, I_thresh):
+def postprocessing_loc(est_images, I_thresh,rad_thred):
     # pre_est: output image from the network
     channels = np.size(est_images,axis=0)
-    rad = 3
+    rad = rad_thred
     I_img = np.sum(est_images[0:3,:,:],axis=0)
     g = matlab_style_gauss2D([7,7],1)
     res = cv.matchTemplate(I_img,g,cv.TM_CCOEFF)
