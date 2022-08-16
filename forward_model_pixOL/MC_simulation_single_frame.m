@@ -128,7 +128,7 @@ I_sYZ = I_sYZ+temp*signal_SMs(i)*muyz(i);
 end
 
 
-count = count+1;
+
     
 I_poissx = poissrnd(Ix); % if you need multiple realization for a single ground truth, modify here
 %imagesc(I_poiss); axis image;
@@ -163,7 +163,7 @@ image_GT_up(7,:,:) = I_sYZ;
 img_bkg = bkg_img;
 
 
-save([save_folder,'img_bkg',num2str(ii),'.mat'],'img_bkg');
+save([save_folder,'img_bkg',num2str(count),'.mat'],'img_bkg');
 save([save_folder,'image_with_poission',num2str(count),'.mat'],'image_with_poission');
 save([save_folder,'image_noiseless',num2str(count),'.mat'],'image_noiseless');
 save([save_folder,'GT_list',num2str(count),'.mat'],'GT_list');

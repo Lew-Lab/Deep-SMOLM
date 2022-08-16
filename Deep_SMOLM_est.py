@@ -35,6 +35,7 @@ def main(config: ConfigParser):
 
     # ---------------dataload using MicroscopyDataloader_w_repeat-------------------
     #repeatFrame = config['est_dataset']['repeat_frame']
+    #list_ID_est = np.int_(np.arange(1,(config['est_dataset']['number_images']*repeatFrame)+1))
     #est_set = MicroscopyDataLoader_est(list_ID_est, **est_file_names,repeat_frame=repeatFrame)
 
     est_generator = DataLoader(est_set, **params_est)
