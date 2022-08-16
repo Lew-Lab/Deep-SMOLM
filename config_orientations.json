@@ -1,13 +1,13 @@
 {   
     "****[name]*******": "name of the current running project; only [name] will read by the code, other names won't be read",
-    "****[n_gpu],[resume_location],[Deep-SMOLM_model_trained]*******": "change [n_gpu] to 0 if use cpu; give the [Deep-SMOLM_model_trained] location if you are doing estimation or give [resume_location] if you are training from previuos checkpoint",
+    "****[n_gpu],[Deep-SMOLM_model_trained]*******": "change [n_gpu] to 0 if use cpu; give the [Deep-SMOLM_model_trained] location if you are doing estimation",
     "name": "training_perfect_pixOL",
     "name1":"training_retrieve_pixOL_com",
     "name2": "phantom_structure",
     "name3": "experimental_a_beta",
     "n_gpu": 0,
-    "resume_location":"",
-    "Deep-SMOLM_model_trained":"/Examples/Example_trained_Deep-SMOLM_model/",
+    "Deep-SMOLM_model_trained":"Examples/trained_Deep-SMOLM_model/models/training_perfect_pixOL_sym_90/0601_170945/model_best.pth",
+    "Deep-SMOLM_model_trained1":"Examples/trained_Deep-SMOLM_model/models/training_retrieve_pixOL_com_sym_90/0720_223400/model_best.pth",
     "seed": 666,
 
     
@@ -67,13 +67,13 @@
 
     "****[parameters2 below]*******": "parameters of the microscopy; [pixel_sz_org]: pixel size of original input image; [upsampling_ratio]: upsampling_ratio of Deep-SMOLM",
     "****[parameters3 below]*******": "[upsampling_ratio]: upsampling_ratio of Deep-SMOLM output images compared to input images; [I_thresh]: photons lower than I_thred is filtered out in the posterprocessing algorithm",
+    "****[parameters4 below]*******": "[rad_thred]: ground pattern is cropped in with a image size of 2*rad_thred+1",
    "microscopy_params": {
         "setup_params":{
-            "H": 60,
-            "W": 60,
-            "pixel_sz_org": 58.6,
+            "pixel_sz_org": 58.5,
             "upsampling_ratio": 6,
-            "I_thresh":200
+            "I_thresh":200,
+            "rad_thred":3
         }
     },
     
@@ -81,7 +81,6 @@
     "****[Trainer]*******":"[epochs]:maximum epochs; [save_dir]: the position where trained model/estimation results are sved",
     "trainer": {
         "epochs": 100,
-        "warmup": 0,
         "save_dir": "Examples/trained_Deep-SMOLM_model",
         "save_period": 1,
         "verbosity": 2,

@@ -1,0 +1,127 @@
+{
+    "****[name]*******": "name of the current running project; only [name] will read by the code, other names won't be read",
+    "****[n_gpu],[Deep-SMOLM_model_trained]*******": "change [n_gpu] to 0 if use cpu; give the [Deep-SMOLM_model_trained] location if you are doing estimation",
+    "name": "training_perfect_pixOL",
+    "name1": "training_retrieve_pixOL_com",
+    "name2": "phantom_structure",
+    "name3": "experimental_a_beta",
+    "n_gpu": 0,
+    "Deep-SMOLM_model_trained": "Examples/trained_Deep-SMOLM_model/models/training_perfect_pixOL_sym_90/0601_170945/model_best.pth",
+    "Deep-SMOLM_model_trained1": "Examples/trained_Deep-SMOLM_model/models/training_retrieve_pixOL_com_sym_90/0720_223400/model_best.pth",
+    "seed": 666,
+    "****[comet]*******": "use your own api key number at comet.ml, a website for live visualization of the training/testing results",
+    "comet": {
+        "api": "enter your API key here",
+        "offline": false,
+        "savedata": false
+    },
+    "****[arch]*******": "neural network archtechture; Deep-SMOLM use archtecture built in [model/model.py]",
+    "arch": {
+        "type": "ConvNet",
+        "args": {}
+    },
+    "****[optimizer]*******": "optimization parameters for neural network",
+    "optimizer": {
+        "type": "SGD",
+        "args": {
+            "lr": 0.001,
+            "momentum": 0.9,
+            "weight_decay": 0.0005
+        }
+    },
+    "optimizer1": {
+        "type": "Adam",
+        "args": {
+            "lr": 0.001,
+            "weight_decay": 0.0001
+        }
+    },
+    "****[parameters below]*******": "loss function related parameters",
+    "scaling_factor": 1000.0,
+    "train_loss": "MSE_loss",
+    "train_loss_change": "l1_loss",
+    "change_traing_loss_function": false,
+    "epoch_change": 15,
+    "test_loss": "MSE_loss",
+    "val_loss": "MSE_loss",
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 80,
+            "gamma": 0.5
+        }
+    },
+    "****[parameters2 below]*******": "parameters of the microscopy; [pixel_sz_org]: pixel size of original input image; [upsampling_ratio]: upsampling_ratio of Deep-SMOLM",
+    "****[parameters3 below]*******": "[upsampling_ratio]: upsampling_ratio of Deep-SMOLM output images compared to input images; [I_thresh]: photons lower than I_thred is filtered out in the posterprocessing algorithm",
+    "****[parameters4 below]*******": "[rad_thred]: ground pattern is cropped in with a image size of 2*rad_thred+1",
+    "microscopy_params": {
+        "setup_params": {
+            "pixel_sz_org": 58.5,
+            "upsampling_ratio": 6,
+            "I_thresh": 200,
+            "rad_thred": 3
+        }
+    },
+    "****[Trainer]*******": "[epochs]:maximum epochs; [save_dir]: the position where trained model/estimation results are sved",
+    "trainer": {
+        "epochs": 100,
+        "warmup": 0,
+        "save_dir": "Examples/trained_Deep-SMOLM_model",
+        "save_period": 1,
+        "verbosity": 2,
+        "asym": false,
+        "sym": false,
+        "percent": 0.9,
+        "subset_percent": 1.0,
+        "monitor": "min test_loss",
+        "early_stop": 10
+    },
+    "****[data_loader]*******": "change the [batch_size] and [num_workers] based on your GPU memory and CPU cores",
+    "data_loader": {
+        "type": "MicroscopyDataLoader",
+        "args": {
+            "batch_size": 6,
+            "shuffle": false,
+            "validation_split": 0,
+            "num_workers": 8
+        }
+    },
+    "****[training_dataset]*******": "the current address only contains 100 images. Please download the full example training data at @OSF, or generate through forward model",
+    "training_dataset": {
+        "noiseless_image_name": "image_noiseless",
+        "background_name": "",
+        "GT_image_name": "image_GT_up",
+        "GT_list_name": "",
+        "file_folder": "Examples/training_data/example1_100images",
+        "number_images": 100
+    },
+    "****[est_dataset]*******": "the current address only contains 100 images. Please download the example estimation data at @OSF, or generate through forward model",
+    "est_dataset": {
+        "noise_image_name": "image_with_poission",
+        "GT_image_name": "image_GT_up",
+        "background_data": "img_bkg_",
+        "GT_list_name": "GT_list",
+        "file_folder": "Examples/simulated_biological_fiber/fiber_omega0_100images",
+        "number_images": 100,
+        "batch_size": 16,
+        "save_name": "phantom_orientation_estimation_dense_SMs.mat"
+    },
+    "****[est_dataset_experiment]*******": "Please download the example experimental estimation data at @OSF",
+    "est_dataset_experiment": {
+        "noise_image_name": "_centerY_y410_x_200_FoV420_220_",
+        "GT_image_name": "",
+        "file_folder": "/Examples/Example_training_data/",
+        "batch_size": 16,
+        "number_images_per_dataset": 1000,
+        "number_FoV": 14,
+        "number_dataSet": 5,
+        "starting_dataSet": 12,
+        "upsampling": 6,
+        "offset_name": "offset_centerY_y410_x_200_FoV420_220_",
+        "background_name": "_bkg_centerY_y410_x_200_FoV420_220_",
+        "tophoton": 0.29,
+        "y2x_channel_ratio": 1.145,
+        "save_name": "A_beta_data"
+    },
+    "exper_name": "training_perfect_pixOLMicroscopyDataLoaderConvNet-Seed=666"
+}

@@ -1,6 +1,5 @@
 import numpy as np
 import torch
-#from tqdm import tqdm
 from tqdm import tqdm_notebook as tqdm
 from typing import List
 from torchvision.utils import make_grid
@@ -11,7 +10,6 @@ from numpy import inf
 from trainer.trainer_utils import *
 from logger import CometWriter
 import scipy.io as sio
-#from train_test_epoches import *
 from trainer.train_test_epoches import *
 
 class Trainer:
@@ -30,7 +28,7 @@ class Trainer:
         self.model = model.to(self.device)
         self.logger = config.get_logger('trainer', config['trainer']['verbosity'])
         self.config = config
-        #self.val_result = [] # Stack all validation result later
+
 
         if len(device_ids) > 1:
             self.model = torch.nn.DataParallel(model, device_ids=device_ids)
@@ -95,10 +93,8 @@ class Trainer:
             savedata2comet(self,epoch=0)
 
         for epoch in tqdm(range(self.start_epoch, self.epochs + 1), desc='Total progress: '):
-            if epoch <= self.config['trainer']['warmup']:
-                result = self._warmup_epoch(epoch)
-            else:
-                result= train_epoch(self,epoch)
+
+            result= train_epoch(self,epoch)
             
             log = {'epoch': epoch}
             for key, value in result.items():

@@ -81,6 +81,37 @@ def resume_checkpoint(self, resume_path):
     self.logger.info("Checkpoint loaded. Resume training from epoch {}".format(self.start_epoch))
 
 
+def resume_trained_model(self, resume_path):
+    """
+    Resume from saved checkpoints
+
+    :param resume_path: Checkpoint path to be resumed
+    """
+    resume_path = str(resume_path)
+    self.logger.info("Loading checkpoint: {} ...".format(resume_path))
+    if self.device.type=='cpu':
+        checkpoint = torch.load(resume_path,map_location=torch.device('cpu'))
+    else:
+        checkpoint = torch.load(resume_path)
+    self.start_epoch = checkpoint['epoch'] + 1
+    self.mnt_best = checkpoint['monitor_best']
+
+    # load architecture params from checkpoint.
+    if checkpoint['arch'] != self.config['arch']:
+        self.logger.warning("Warning: Architecture configuration given in config file is different from that of "
+                            "checkpoint. This may yield an exception while state_dict is being loaded.")
+    self.model.load_state_dict(checkpoint['state_dict'])
+
+    # load optimizer state from checkpoint only when optimizer type is not changed.
+    # if checkpoint['config']['optimizer']['type'] != self.config['optimizer']['type']:
+    #     self.logger.warning("Warning: Optimizer type given in config file is different from that of checkpoint. "
+    #                         "Optimizer parameters not being resumed.")
+    # else:
+    self.optimizer.load_state_dict(checkpoint['optimizer'])
+
+    self.logger.info("Checkpoint loaded. Estimation using model saved in {}".format(resume_path))
+
+
 def savedata2comet(self,epoch,fig_1SM=None, fig_angles_1SM=None, fig_2SMs=None, best=None):
     if epoch==0:
         self.writer = CometWriter(
@@ -96,14 +127,14 @@ def savedata2comet(self,epoch,fig_1SM=None, fig_angles_1SM=None, fig_2SMs=None, 
 
         if epoch % self.save_period == 0:
                 save_checkpoint(self,epoch, save_best=best)
-        if (epoch - 1) % 1 == 0:
-            figure_name = f"Epoch {epoch} validation result 1SM"
-            self.writer.add_plot(figure_name, fig_1SM)
-            figure_name = f"Epoch {epoch} validation result 1SM angles"
-            self.writer.add_plot(figure_name, fig_angles_1SM)
-        if (epoch - 1) % 1 == 0:
-            figure_name = f"Epoch {epoch} validation result 2SMs"
-            self.writer.add_plot(figure_name, fig_2SMs)
+        # if (epoch - 1) % 1 == 0:
+        #     figure_name = f"Epoch {epoch} validation result 1SM"
+        #     self.writer.add_plot(figure_name, fig_1SM)
+        #     figure_name = f"Epoch {epoch} validation result 1SM angles"
+        #     self.writer.add_plot(figure_name, fig_angles_1SM)
+        # if (epoch - 1) % 1 == 0:
+        #     figure_name = f"Epoch {epoch} validation result 2SMs"
+        #     self.writer.add_plot(figure_name, fig_2SMs)
 
 
 def progress_bar(self, batch_idx):
