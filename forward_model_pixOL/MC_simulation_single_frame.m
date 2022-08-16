@@ -1,6 +1,6 @@
 %% generate images for MC simulation
-% generate 200 noise images for each orientation state, and then need to
-%use Deep-SMOLM to analyse these 200 images
+% only generate 1 frame for each orientation state. use the deep-SMOLM
+% algorithm to repeat the 1 noiseless image 200 times.
 
 
 %% image generation
@@ -9,11 +9,11 @@
 
 % give the save address for generated data
 % ********************************
-save_folder = '/home/wut/Documents/Deep-SMOLM/data/opt_PSF_data_1000vs2/MC_simulation_20220723_SNR500vs2_omega0_random_loc/'; 
+save_folder = '/home/wut/Documents/Deep-SMOLM/data/vortex_PSF_data/MC_simulation_SNR500_3.5_omega0_single_frame/'; 
 % ********************************
 image_size = 32;  % the pixel size of the simulation image (feel free to change it)
 upsampling_ratio  = 6;
-pmask = 'pixOL_v12.bmp';
+pmask = 'vortex_v2.bmp';
 basis_matrix_opt = forward_model_opt(pmask, image_size);
 pixel_size = 58.6; %in unit of um
 
@@ -27,8 +27,8 @@ h = h./max(max(h));
 %% user defined parameters
 
 n_images = 1; % the simulated image numbers (feel free to change it)
-signal= 1000; %(feel free to change it)
-background=2 ; %(feel free to change it)
+signal= 500; %(feel free to change it)
+background=3.5; %(feel free to change it)
 
 %%
 
@@ -38,7 +38,7 @@ phiD_simulate=2*pi*v/pi*180;
 thetaD_simulate=acos(2*u-1)/pi*180;
 omega_simulate = 0;
 gamma_simulate = 0.5732;
-frame_per_state = 200;
+frame_per_state = 1;
 count = 0;
 %%
 
@@ -66,8 +66,8 @@ gamma_SMs = gamma_simulate;
 %gamma_SMs(:)=1;
 
 
-x_SMs = (1*rand(1)-1/2); %x location, in unit of pixles
-y_SMs = (1*rand(1)-1/2);%y location, in unit of pixles
+x_SMs = 0; %(1*rand(1)-1/2); %x location, in unit of pixles
+y_SMs = 0; %(1*rand(1)-1/2);%y location, in unit of pixles
 %temp = (poissrnd(3,1,100)+normrnd(0,1,1,100)-0.5)*350; temp(temp<100)=[];
 %signal_SMs = temp(1:n_SMs);
 signal_SMs = signal;
@@ -97,6 +97,7 @@ Iy = I(1:image_size,image_size+1:image_size*2);
 I_basis = zeros(image_size*upsampling_ratio,image_size*upsampling_ratio);
 
 
+% four channels
 I_intensity_up = I_basis;
 I_intensity_gaussian = I_intensity_up;
 I_sXX = I_intensity_up;

@@ -1,3 +1,4 @@
+%% description: for generating training data
 % clc;
 % clear;
 
@@ -12,12 +13,22 @@ save_folder = '..\Examples\training_data\example1_100images\';
 % ********************************
 image_size = 60;  % the pixel size of the simulation image (feel free to change it)
 upsampling_ratio  = 6;
+
+%---------------------option1: using perfect phase mask---------------
 pmask = 'pixOL_v12.bmp';
 %pmask = 'vortex_v2.bmp';
+basis_matrix_opt = forward_model_opt(pmask, image_size);
+%---------------------------------------------------------------
+
+%---------------------option2: using calibrate phase mask---------------
+% also see code 'generate_training_images_retrieved_pmask_w_focal_drift.m'
+% for option 3
+
 %pmask_retrieve_name = '20220214_pixOL_com_retrieve.mat';
 %basis_matrix_opt = forward_model_opt_retrieved(pmask, image_size,pmask_retrieve_name);
-basis_matrix_opt = forward_model_opt(pmask, image_size);
-pixel_size = 58.5; %in unit of um
+%--------------------------------
+
+pixel_size = 58.6; %in unit of um
 %% gaussian filter
 h_shape = [7,7];
 h_sigma = 1;
@@ -71,7 +82,7 @@ gamma_grd(1:n_SMs) = gamma_SMs.'; I_grd(1:n_SMs) = signal_SMs.';
 
 background = background_avg;
 
-%% forward imaging system
+%% forward imaging system & basis image caculation
 
 [muxx,muyy,muzz,muxy,muxz,muyz] = Quickly_rotating_matrix_angleD_gamma_to_M(thetaD_SMs,phiD_SMs,gamma_SMs);
 M = [muxx;muyy;muzz;muxy;muxz;muyz];
@@ -80,7 +91,7 @@ I_SMs = reshape(I_SMs,image_size,image_size*2,n_SMs);
 I_SMsx = I_SMs(1:image_size,1:image_size,:);
 I_SMsy = I_SMs(1:image_size,image_size+1:image_size*2,:);
 I_SMsy = flip(I_SMsy,2);
-%% generate the basis image
+%% create GT image and SMLM image
 I = ones(image_size,image_size*2)*background;   
 bkg_img = I;
 Ix = I(1:image_size,1:image_size);
@@ -99,7 +110,7 @@ h_basis = zeros(image_size*upsampling_ratio,image_size*upsampling_ratio);
 h_basis(round((size(h_basis,1)+1)/2)+[-(h_shape(1)-1)/2:(h_shape(1)-1)/2],round((size(h_basis,2)+1)/2)+[-(h_shape(1)-1)/2:(h_shape(1)-1)/2]) = h;
 
 
-%generate ground truth image and single moleucle image
+%% save ground truth and single-molecule images
 for i = 1:n_SMs
 Ix = Ix+imtranslate(I_SMsx(:,:,i),[x_SMs(i),y_SMs(i)],'bicubic')*signal_SMs(i);
 Iy = Iy+imtranslate(I_SMsy(:,:,i),[x_SMs(i),y_SMs(i)],'bicubic')*signal_SMs(i);
@@ -137,7 +148,6 @@ GT_list(5,:)=thetaD_grd;
 GT_list(6,:)=phiD_grd;
 GT_list(7,:)=gamma_grd;
 img_bkg = bkg_img;
-
 
 
 
