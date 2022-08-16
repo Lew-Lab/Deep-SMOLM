@@ -13,7 +13,7 @@ save_folder = '/home/wut/Documents/Deep-SMOLM/data/vortex_PSF_data/MC_simulation
 % ********************************
 image_size = 32;  % the pixel size of the simulation image (feel free to change it)
 upsampling_ratio  = 6;
-pmask = 'vortex_v2.bmp';
+pmask = 'pixOL_v12.bmp';
 basis_matrix_opt = forward_model_opt(pmask, image_size);
 pixel_size = 58.6; %in unit of um
 
@@ -27,8 +27,8 @@ h = h./max(max(h));
 %% user defined parameters
 
 n_images = 1; % the simulated image numbers (feel free to change it)
-signal= 500; %(feel free to change it)
-background=3.5; %(feel free to change it)
+signal= 1000; %(feel free to change it)
+background=2; %(feel free to change it)
 
 %%
 
