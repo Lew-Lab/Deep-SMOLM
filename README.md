@@ -16,7 +16,7 @@ Experimental data estimating: Deep_SMOLM_est_experiment.py
 
 ## Forward model
 ```
-Generating simulated training images: forward_model_pixOL\generate_images_pixOL_perfect.m
+Generating simulated training images: forward_model_pixOL\generate_images_pmask_perfect.m
 ```
 
 
