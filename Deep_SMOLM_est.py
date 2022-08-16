@@ -3,6 +3,8 @@ import argparse
 import collections
 import torch
 from data_loader.MicroscopyDataloader_est import MicroscopyDataLoader_est
+# use the following dataloader, if imput noiseless image and do multiple noiserealization inside the algorithm
+#from data_loader.MicroscopyDataloader_w_repeat import MicroscopyDataLoader_w_repeat as MicroscopyDataLoader_est
 from torch.utils.data import DataLoader
 import model.loss as module_loss
 import model.postprocessing_main as module_metric
@@ -30,6 +32,11 @@ def main(config: ConfigParser):
 
     list_ID_est = np.int_(np.arange(1,config['est_dataset']['number_images']+1))
     est_set = MicroscopyDataLoader_est(list_ID_est, **est_file_names)
+
+    # ---------------dataload using MicroscopyDataloader_w_repeat-------------------
+    #repeatFrame = config['est_dataset']['repeat_frame']
+    #est_set = MicroscopyDataLoader_est(list_ID_est, **est_file_names,repeat_frame=repeatFrame)
+
     est_generator = DataLoader(est_set, **params_est)
 
 
@@ -57,7 +64,7 @@ def main(config: ConfigParser):
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser(description='training parameters')
-    args.add_argument('-c', '--config', default="config_orientations.json", type=str,
+    args.add_argument('-c', '--config', default="config_orientations_v2.json", type=str,
                       help='config file path (default: None)')
     args.add_argument('-r', '--resume', default=None, type=str,
                       help='path to latest checkpoint (default: None)')
