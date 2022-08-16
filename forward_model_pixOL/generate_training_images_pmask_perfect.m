@@ -40,8 +40,8 @@ h = h./max(max(h));
 %% user defined parameters
 
 n_images = 100; % the simulated image numbers (feel free to change it); 30K is used for training Deep-SMOLM
-signal= 500; %(feel free to change it)
-background_avg=3.5; %(feel free to change it)
+signal= 1000; %(feel free to change it)
+background_avg=2; %(feel free to change it)
 
 SM_num_range = 8;
 SM_num_min = 7;
