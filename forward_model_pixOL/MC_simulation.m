@@ -26,7 +26,7 @@ h = exp(-(x.^2+y.^2)/(2*h_sigma^2));
 h = h./max(max(h));
 %% user defined parameters
 
-n_images = 1; % the simulated image numbers (feel free to change it)
+n_images = 200; % the simulated image numbers (feel free to change it)
 signal= 1000; %(feel free to change it)
 background=2 ; %(feel free to change it)
 
