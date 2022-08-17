@@ -5,6 +5,7 @@ Deep-SMOLM is an estimator for estimating 3D orientation and 2D position of dipo
 
 ```
 Please read the 'readme.docx'
+All the user defined parameters are in config_orientations.json
 ```
 
 ## Deep-SMOLM training/estimating
