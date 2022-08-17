@@ -60,7 +60,7 @@ class MicroscopyDataLoader_w_repeat():
         if self.GT_list_name != "":
             GT_list = sio.loadmat(self.file_folder+"/"+self.GT_list_name+ID_t+'.mat') 
             GT_list = np.array(GT_list[self.GT_list_name])
-            GT_list_final = np.reshape(GT_list,(1,-1))
+            GT_list_final = np.reshape(GT_list,(1,-1)).astype('float32')
         else:
             GT_list_final = 0
             
