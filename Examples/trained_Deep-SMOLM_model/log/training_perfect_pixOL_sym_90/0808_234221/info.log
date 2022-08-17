@@ -1,3 +1,0 @@
-2022-08-08 23:42:26,387 - trainer - INFO - Loading checkpoint: Examples/trained_Deep-SMOLM_model/models/training_perfect_pixOL_sym_90/0601_170945/model_best.pth ...
-2022-08-08 23:42:26,394 - trainer - WARNING - Warning: Architecture configuration given in config file is different from that of checkpoint. This may yield an exception while state_dict is being loaded.
-2022-08-08 23:42:26,398 - trainer - INFO - Checkpoint loaded. Estimation using model saved in Examples/trained_Deep-SMOLM_model/models/training_perfect_pixOL_sym_90/0601_170945/model_best.pth

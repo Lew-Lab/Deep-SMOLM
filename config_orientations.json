@@ -118,7 +118,7 @@
         "GT_list_name": "",
         "file_folder": "Examples/training_data/example1_100images",
         "number_images":100,
-        "dataloader_method":"MicroscopyDataloader"
+        "dataloader_method":"MicroscopyDataLoader"
     },
 
     "****[est_dataset]*******":"the current address only contains 100 images. Please download the example estimation data at @OSF, or generate through forward model",
