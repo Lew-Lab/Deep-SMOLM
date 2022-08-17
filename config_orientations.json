@@ -130,8 +130,8 @@
         "file_folder": "Examples/simulated_biological_fiber/fiber_omega0_100images",
         "number_images":100,
         "batch_size": 16,
-        "save_name":"phantom_orientation_estimation_dense_SMs.mat",
-        "dataloader_method":"MicroscopyDataLoader_est"
+        "dataloader_method":"MicroscopyDataLoader_est",
+        "save_name":"phantom_orientation_estimation_dense_SMs.mat"
     },
 
     "****[est_dataset_experiment]*******":"Please download the example experimental estimation data at @OSF",
@@ -150,7 +150,7 @@
         "background_name":"_bkg_centerY_y410_x_200_FoV420_220_",
         "tophoton": 0.29,
         "y2x_channel_ratio":1.145,
-        "save_name":"A_beta_data",
-        "dataloader_method":"MicroscopyDataLoader_est_experiment"
+        "dataloader_method":"MicroscopyDataLoader_est_experiment",
+        "save_name":"A_beta_data"
     }
 }
