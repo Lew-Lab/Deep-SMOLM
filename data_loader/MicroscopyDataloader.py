@@ -6,7 +6,7 @@ import scipy.io as sio
 
 class MicroscopyDataLoader():
 
-    def __init__(self, list_IDs, noiseless_image_name, GT_image_name, GT_list_name,file_folder, batch_size,setup_params,background_name=""):
+    def __init__(self, list_IDs, noiseless_image_name, GT_image_name, GT_list_name,file_folder, batch_size,setup_params,background_name="",repeat_frame=1):
        
         self.list_IDs = list_IDs
         self.noiseless_image_name = noiseless_image_name

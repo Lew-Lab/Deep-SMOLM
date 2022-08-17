@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 class MicroscopyDataLoader_est_experiment():
 
-    def __init__(self,list_IDs, noise_image_name, file_folder, batch_size,upsampling,offset_name,background_name,tophoton,data_batch_cur,data_FoV_cur):
+    def __init__(self,list_IDs, noise_image_name, file_folder, batch_size,upsampling,offset_name,background_name,tophoton,data_batch_cur,data_FoV_cur,repeat_frame=1):
        
 
        self.noise_image_name = noise_image_name

@@ -2,9 +2,7 @@ import comet_ml
 import argparse
 import collections
 import torch
-from data_loader.MicroscopyDataloader_est import MicroscopyDataLoader_est
-# use the following dataloader, if imput noiseless image and do multiple noiserealization inside the algorithm
-#from data_loader.MicroscopyDataloader_w_repeat import MicroscopyDataLoader_w_repeat as MicroscopyDataLoader_est
+import data_loader as dataLoaderMethod
 from torch.utils.data import DataLoader
 import model.loss as module_loss
 import model.postprocessing_main as module_metric
@@ -30,13 +28,15 @@ def main(config: ConfigParser):
 'setup_params':config['microscopy_params']['setup_params']}
 
 
-    list_ID_est = np.int_(np.arange(1,config['est_dataset']['number_images']+1))
-    est_set = MicroscopyDataLoader_est(list_ID_est, **est_file_names)
+    # read the dataloading method
+    MicroscopyDataLoader_method =  getattr(dataLoaderMethod, config['est_dataset']['dataloader_method'])    
+    if "repeat_frame" in  config['est_dataset']:
+        repeatFrame = config['est_dataset']['repeat_frame']
+    else:
+        repeatFrame=1
 
-    # ---------------dataload using MicroscopyDataloader_w_repeat-------------------
-    #repeatFrame = config['est_dataset']['repeat_frame']
-    #list_ID_est = np.int_(np.arange(1,(config['est_dataset']['number_images']*repeatFrame)+1))
-    #est_set = MicroscopyDataLoader_est(list_ID_est, **est_file_names,repeat_frame=repeatFrame)
+    list_ID_est = np.int_(np.arange(1,(config['est_dataset']['number_images']*repeatFrame)+1))
+    est_set = MicroscopyDataLoader_method(list_ID_est, **est_file_names,repeat_frame=repeatFrame)
 
     est_generator = DataLoader(est_set, **params_est)
 
@@ -65,7 +65,7 @@ def main(config: ConfigParser):
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser(description='training parameters')
-    args.add_argument('-c', '--config', default="config_orientations_v2.json", type=str,
+    args.add_argument('-c', '--config', default="config_orientations.json", type=str,
                       help='config file path (default: None)')
     args.add_argument('-r', '--resume', default=None, type=str,
                       help='path to latest checkpoint (default: None)')

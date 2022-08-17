@@ -12,10 +12,16 @@
 
     
     "****[comet]*******": "use your own api key number at comet.ml, a website for live visualization of the training/testing results",
-    "comet": {
+    "comet1": {
         "api": "enter your API key here",
         "offline": false,
         "savedata": false
+    },
+
+    "comet": {
+        "api": "HS8aaMUrFL1HqxSzscKX8QGd7",
+        "offline": false,
+        "savedata": true
     },
 
 
@@ -111,7 +117,8 @@
         "GT_image_name": "image_GT_up",
         "GT_list_name": "",
         "file_folder": "Examples/training_data/example1_100images",
-        "number_images":100
+        "number_images":100,
+        "dataloader_method":"MicroscopyDataloader"
     },
 
     "****[est_dataset]*******":"the current address only contains 100 images. Please download the example estimation data at @OSF, or generate through forward model",
@@ -123,24 +130,27 @@
         "file_folder": "Examples/simulated_biological_fiber/fiber_omega0_100images",
         "number_images":100,
         "batch_size": 16,
-        "save_name":"phantom_orientation_estimation_dense_SMs.mat"
+        "save_name":"phantom_orientation_estimation_dense_SMs.mat",
+        "dataloader_method":"MicroscopyDataLoader_est"
     },
 
     "****[est_dataset_experiment]*******":"Please download the example experimental estimation data at @OSF",
     "est_dataset_experiment": {
         "noise_image_name": "_centerY_y410_x_200_FoV420_220_",
         "GT_image_name": "",
-        "file_folder": "/Examples/Example_training_data/",
+        "file_folder": "Examples/experimental_amyloid_fibril/data1_one_FOV/",
         "batch_size":16,
         "number_images_per_dataset":1000,
-        "number_FoV": 14,
-        "number_dataSet": 5,
-        "starting_dataSet":12,
+        "number_FoV": 1,
+        "starting_FoV": 6,
+        "number_dataSet": 1,
+        "starting_dataSet":13,
         "upsampling":6,
         "offset_name":"offset_centerY_y410_x_200_FoV420_220_",
         "background_name":"_bkg_centerY_y410_x_200_FoV420_220_",
         "tophoton": 0.29,
         "y2x_channel_ratio":1.145,
-        "save_name":"A_beta_data"
+        "save_name":"A_beta_data",
+        "dataloader_method":"MicroscopyDataLoader_est_experiment"
     }
 }

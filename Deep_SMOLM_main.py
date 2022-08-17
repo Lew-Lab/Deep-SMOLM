@@ -2,7 +2,7 @@ import comet_ml
 import argparse
 import collections
 import torch
-from data_loader.MicroscopyDataloader import MicroscopyDataLoader
+import data_loader as dataLoaderMethod
 from torch.utils.data import DataLoader
 import model.loss as module_loss
 import model.postprocessing_main as module_metric
@@ -38,15 +38,17 @@ def main(config: ConfigParser):
     percentage = config['trainer']['percent']                                                                   
     numb_training = np.floor(number_images*percentage) 
     numb_testing = np.floor(number_images*(1-percentage))      
-                                    
+
+    # read the dataloading method
+    MicroscopyDataLoader_method =  getattr(dataLoaderMethod, config['training_dataset']['dataloader_method'])                             
     # instantiate the data class and create a datalaoder for training
     list_ID_train = np.int_(np.arange(1,numb_training+1))
-    training_set = MicroscopyDataLoader(list_ID_train, **train_test_file_names)
+    training_set = MicroscopyDataLoader_method(list_ID_train, **train_test_file_names)
     training_generator = DataLoader(training_set, **params_train)
     
     # instantiate the data class and create a datalaoder for testing
     list_ID_test = np.int_(np.arange(numb_training+1+1,numb_training+numb_testing+1))
-    test_set = MicroscopyDataLoader(list_ID_test, **train_test_file_names)
+    test_set = MicroscopyDataLoader_method(list_ID_test, **train_test_file_names)
     test_generator = DataLoader(test_set, **params_test)
     batch_size = config['data_loader']['args']['batch_size']
     print(len(training_generator)*batch_size, len(test_generator)*batch_size)

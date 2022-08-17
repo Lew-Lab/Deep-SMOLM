@@ -2,7 +2,7 @@ import comet_ml
 import argparse
 import collections
 import torch
-from data_loader.MicroscopyDataloader_est_experiment import MicroscopyDataLoader_est_experiment
+import data_loader as dataLoaderMethod
 from torch.utils.data import DataLoader
 import model.loss as module_loss
 import model.postprocessing_main as module_metric
@@ -25,7 +25,7 @@ def main(config: ConfigParser):
 
     for data_batch_cur in list_data_batch:
         for data_FoV_cur in list_data_FoV:
-            data_FoV_cur = data_FoV_cur
+            data_FoV_cur = data_FoV_cur+config['est_dataset_experiment']['starting_FoV']-1
             params_est = {'batch_size':config['est_dataset_experiment']['batch_size'],'shuffle':False, 'num_workers':config['data_loader']['args']['num_workers']}
             
             est_file_names = {'noise_image_name':config['est_dataset_experiment']['noise_image_name'],
@@ -40,9 +40,11 @@ def main(config: ConfigParser):
 
 
 
+            # read the dataloading method
+            MicroscopyDataLoader_method =  getattr(dataLoaderMethod, config['est_dataset_experiment']['dataloader_method'])    
 
             list_ID_est = np.int_(np.arange(1,config['est_dataset_experiment']['number_images_per_dataset']+1))
-            est_set = MicroscopyDataLoader_est_experiment(list_ID_est, **est_file_names)
+            est_set = MicroscopyDataLoader_method(list_ID_est, **est_file_names)
             est_generator = DataLoader(est_set, **params_est)
 
 
