@@ -12,16 +12,11 @@
 
     
     "****[comet]*******": "use your own api key number at comet.ml, a website for live visualization of the training/testing results",
-    "comet1": {
+    "****[comet1]*******":"read readme.docx section 3(a)",
+    "comet": {
         "api": "enter your API key here",
         "offline": false,
         "savedata": false
-    },
-
-    "comet": {
-        "api": "HS8aaMUrFL1HqxSzscKX8QGd7",
-        "offline": false,
-        "savedata": true
     },
 
 
@@ -110,7 +105,8 @@
     },
 
 
-    "****[training_dataset]*******":"the current address only contains 100 images. Please download the full example training data at @OSF, or generate through forward model",
+    "****[training_dataset]*******":"the current address only contains 100 images. Please download the full example training data at @OSF, or generate through forward model (recommended)",
+    "****[training_dataset1]*******":"read readme.docx section 3",
     "training_dataset": {
         "noiseless_image_name":"image_noiseless",
         "background_name":"",
@@ -121,7 +117,8 @@
         "dataloader_method":"MicroscopyDataLoader"
     },
 
-    "****[est_dataset]*******":"the current address only contains 100 images. Please download the example estimation data at @OSF, or generate through forward model",
+    "****[est_dataset]*******":"the current address only contains 100 images. Please download the example estimation data at @OSF, or generate through forward model (recommended)",
+    "****[est_dataset1]*******":"read readme.docx section 4(a)",
     "est_dataset": {
         "noise_image_name":"image_with_poission",
         "GT_image_name": "image_GT_up",
@@ -135,6 +132,7 @@
     },
 
     "****[est_dataset_experiment]*******":"Please download the example experimental estimation data at @OSF",
+    "****[est_dataset_experiment1]*******":"read readme.docx section 4(b)",
     "est_dataset_experiment": {
         "noise_image_name": "_centerY_y410_x_200_FoV420_220_",
         "GT_image_name": "",
