@@ -1,0 +1,113 @@
+ThunderSTORM (1.3-2014-11-08)
+
+Input:
+{
+  "title": "_8_MMStack_Default.ome.tif",
+  "roiBounds": {
+    "x": 0,
+    "y": 0,
+    "width": 874,
+    "height": 400
+  }
+}
+Camera settings:
+{
+  "offset": 100.0,
+  "isEmGain": false,
+  "photons2ADU": 0.29,
+  "pixelSize": 1.0,
+  "gain": 100.0
+}
+Analysis:
+{
+  "name": "Wavelet filter (B-Spline)",
+  "parameters": {
+    "prefsPrefix": "thunderstorm.filters.wave",
+    "trackedParameters": {
+      "scale": {
+        "defaultValue": 2.0,
+        "value": 2.0
+      },
+      "order": {
+        "defaultValue": 3,
+        "value": 3
+      }
+    }
+  }
+}
+{
+  "name": "Centroid of connected components",
+  "threshold": "std(Wave.F1)",
+  "useWatershed": false,
+  "parameters": {
+    "prefsPrefix": "thunderstorm.detectors.centroid",
+    "trackedParameters": {
+      "watershed": {
+        "defaultValue": false,
+        "value": false
+      },
+      "threshold": {
+        "defaultValue": "std(Wave.F1)",
+        "value": "std(Wave.F1)"
+      }
+    }
+  }
+}
+{
+  "name": "PSF: Integrated Gaussian",
+  "crowdedField": {
+    "params": {
+      "prefsPrefix": "thunderstorm.estimators.dense.mfa",
+      "trackedParameters": {
+        "mfaenabled": {
+          "defaultValue": false,
+          "value": false
+        },
+        "keep_same_intensity": {
+          "defaultValue": true,
+          "value": true
+        },
+        "nmax": {
+          "defaultValue": 5,
+          "value": 5
+        },
+        "fixed_intensity": {
+          "defaultValue": false,
+          "value": false
+        },
+        "expected_intensity": {
+          "defaultValue": "500:2500",
+          "value": "500:2500"
+        },
+        "pvalue": {
+          "defaultValue": 1.0E-6,
+          "value": 1.0E-6
+        }
+      }
+    },
+    "name": "Multi-emitter fitting analysis"
+  },
+  "parameters": {
+    "prefsPrefix": "thunderstorm.estimators",
+    "trackedParameters": {
+      "sigma": {
+        "defaultValue": 1.6,
+        "value": 1.6
+      },
+      "fitradius": {
+        "defaultValue": 3,
+        "value": 3
+      },
+      "method": {
+        "defaultValue": "Weighted Least squares",
+        "value": "Least squares"
+      },
+      "full_image_fitting": {
+        "defaultValue": false,
+        "value": false
+      }
+    }
+  }
+}
+Post-processing:
+[]
