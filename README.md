@@ -29,4 +29,4 @@ Crop images based on registration map: tfrom_crop_image_for_deep_SMOLM\crop_imag
 
 
 ## References
-Deep-SMOLM: Deep Learning Resolves the 3D Orientations and 2D Positions of Overlapping Single Molecules with Optimal Nanoscale Resolution
+T. Wu, P. Lu, M. A. Rahman, X. Li, and M. D. Lew, “Deep-SMOLM: deep learning resolves the 3D orientations and 2D positions of overlapping single molecules with optimal nanoscale resolution,” Opt. Express 30, 36761 (2022). [Article](https://doi.org/10.1364/OE.470146)
